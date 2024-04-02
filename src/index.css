@@ -1,0 +1,144 @@
+* {
+  color: #fff;
+  box-sizing: border-box;
+  background-color: rgb(70, 137, 179);
+  margin-top: 10px;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  padding: 0;
+}
+
+h1 {
+  color: beige;
+  font-size: larger;
+  font-size: 22px;
+  text-align:center;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+h4 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+h5 {
+  margin-top: 0;
+  font-size: 14px;
+}
+
+h6 {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+code {
+  font-size: 1.2em;
+}
+
+ul {
+  list-style-type: none;
+  padding-inline-start: 20px;
+}
+
+.square {
+  font-size: 74px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.board {
+  --columns: 4;
+  --rows: 4;
+  --board-outline-color: #333;
+  border: 2px solid var(--board-outline-color);
+  border-radius: var(--bs-border-radius);
+  background: var(--board-outline-color);
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  gap: 2px;
+}
+
+.square {
+  --square-background: white;
+  --square-color: black;
+  background: var(--square-background);
+  aspect-ratio: 1;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--square-color);
+  &:hover {
+    --square-background: #eee;
+    --square-color: white;
+  }
+  /* Later, we can add more states, such as disabled, winning, etc. */
+  &.is-selected {
+    cursor: default;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.game-info button {
+  background-color: #fff;
+  color: #151313;
+}
+.emojiContainer {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.emoji {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background-color: lightblue;
+  border-radius: 8px;
+  font-size: 74px;
+}
+
+.typing-animation {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; } 
+}
