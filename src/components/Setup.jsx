@@ -19,8 +19,6 @@ export default function Setup({ players, onSubmit }) {
       },
     ]
 
-    console.log(players)
-
     onSubmit({ players })
   }
   return (

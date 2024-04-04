@@ -11,5 +11,4 @@ export const GAME_STATE = {
   SETUP: 'setup',
   IDLE: 'idle',
   REPLAY: 'replay',
-  MAKING_MOVE: 'making_move',
 }

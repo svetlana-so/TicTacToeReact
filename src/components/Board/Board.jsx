@@ -11,7 +11,6 @@ export default function Board({ currentPlayer, squares, onPlay, players }) {
     // previous versions of the data intact, and reuse them later.
     const nextSquares = squares.slice()
     nextSquares[i] = players[currentPlayer ? 0 : 1].symbol
-    console.log(nextSquares[i])
     onPlay(nextSquares)
   }
 

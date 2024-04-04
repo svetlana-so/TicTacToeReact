@@ -36,9 +36,23 @@ export default function Game() {
   const isDraw = !winner && currentSquares.every(square => square);
   
 
-  function handlePlay(nextSquares) {
+  function gameOn(nextSquares) {
     setHistory([...history, nextSquares])
     setcurrentPlayer(!currentPlayer)
+  }
+
+  const resetGame = boardSize => {
+    setHistory([Array(boardSize * boardSize).fill(null)])
+    setcurrentPlayer(true)
+  }
+
+  const handleNewGameClick = () => {
+    setGameState(GAME_STATE.SETUP)
+    resetGame(boardSize)
+  }
+
+  const handleRestartClick = () => {
+    resetGame(boardSize)
   }
 
   if (gameState === GAME_STATE.SETUP) {
@@ -59,11 +73,11 @@ export default function Game() {
           boardSize={boardSize}
           currentPlayer={currentPlayer}
           squares={currentSquares}
-          onPlay={handlePlay}
+          onPlay={gameOn}
         />
       </div>
       <div className="game-info">
-        <Status winner={winner} isDraw={isDraw}/>
+        <Status winner={winner} isDraw={isDraw}  onNewGameClick={handleNewGameClick} onRestartClick={handleRestartClick}/>
       </div>
     </div>
   )
