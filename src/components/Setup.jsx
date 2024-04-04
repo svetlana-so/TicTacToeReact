@@ -1,8 +1,8 @@
 import { symbolOptions } from '@/utils/emojis'
-import { BOARD_SIZES, PLAYER_TYPE } from '@/utils/constants'
+import { PLAYER_TYPE } from '@/utils/constants'
 import RandomCard from '@/components/RandomCard'
 
-export default function Setup({ players, boardSize, onSubmit }) {
+export default function Setup({ players, onSubmit }) {
   const handleSubmit = event => {
     event.preventDefault()
 
@@ -19,27 +19,13 @@ export default function Setup({ players, boardSize, onSubmit }) {
       },
     ]
 
-    const boardSize = Number(event.target.boardSize.value)
-    console.log(boardSize)
+    console.log(players)
 
-    onSubmit({ players, boardSize })
+    onSubmit({ players })
   }
   return (
     <form onSubmit={handleSubmit}>
       <RandomCard />
-      <div className="mb-3 d-inline-block">
-        <label htmlFor="boardSize" className="form-label">
-          Board Size
-        </label>
-        <select className="form-select" id="boardSize" defaultValue={boardSize}>
-          {BOARD_SIZES.map(size => (
-            <option key={size} value={size}>
-              {' '}
-              {size}x{size}{' '}
-            </option>
-          ))}
-        </select>
-      </div>
       <div className="row">
         <div className="col">
           <h2>Player 1</h2>

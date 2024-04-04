@@ -1,15 +1,14 @@
-import Board from './components/Board'
+import Board from './components/Board/Board'
 import Setup from '@/components/Setup'
-import History from '@/components/History'
-
+import Status from '@/components/Status'
 import { useState } from 'react'
 import calculateWinner from './utils/calculateWinner'
-import { startReplay } from './utils/startReplay'
-import { DEFAULT_BOARD_SIZE, PLAYER_TYPE, GAME_STATE } from '@/utils/constants'
 
+
+import { DEFAULT_BOARD_SIZE, PLAYER_TYPE, GAME_STATE } from '@/utils/constants'
+import NextMove from './components/NextMove'
 
 export default function Game() {
-
   const [players, setPlayers] = useState([
     {
       name: 'Player 1',
@@ -23,47 +22,48 @@ export default function Game() {
     },
   ])
   const [gameState, setGameState] = useState(GAME_STATE.SETUP)
-  const [boardSize, setBoardSize] = useState(DEFAULT_BOARD_SIZE)
+  const [boardSize] = useState(DEFAULT_BOARD_SIZE)
 
-
-  const handleSubmit = ({ players, boardSize }) => {
+  const handleSubmit = ({ players }) => {
     setPlayers(players)
-    setBoardSize(boardSize)
     setGameState(GAME_STATE.IDLE)
   }
-    
 
-
-  const [xIsNext, setXIsNext] = useState(true)
-  const [history, setHistory] = useState([Array(9).fill(null)])
+  const [currentPlayer, setcurrentPlayer] = useState(true)
+  const [history, setHistory] = useState([Array(boardSize * boardSize).fill(null)])
   const currentSquares = history[history.length - 1]
   const winner = calculateWinner(currentSquares)
-  const [replayMode, setReplayMode] = useState(false)
+  const isDraw = !winner && currentSquares.every(square => square);
+  
 
   function handlePlay(nextSquares) {
     setHistory([...history, nextSquares])
-    setXIsNext(!xIsNext)
+    setcurrentPlayer(!currentPlayer)
   }
 
   if (gameState === GAME_STATE.SETUP) {
     return (
       <div className="container">
-         <h1 className="typing-animation">Tic-Tac-Toe Emoji</h1>
-        <Setup boardSize={boardSize} players={players} onSubmit={handleSubmit} />
+        <h1 className="typing-animation">Tic-Tac-Toe Emoji</h1>
+        <Setup players={players} onSubmit={handleSubmit} />
       </div>
-  ) }
+    )
+  }
 
   return (
     <div className="container">
-
+      {!(winner || isDraw) && <NextMove players={players} currentPlayer={currentPlayer} />}
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board
+        players={players} 
+          boardSize={boardSize}
+          currentPlayer={currentPlayer}
+          squares={currentSquares}
+          onPlay={handlePlay}
+        />
       </div>
       <div className="game-info">
-        <button onClick={() => startReplay(history, setReplayMode, handlePlay)} disabled={!winner}>
-          Start Replay
-        </button>
-        <History history = { history} replayMode= {replayMode}/>
+        <Status winner={winner} isDraw={isDraw}/>
       </div>
     </div>
   )
